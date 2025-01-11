@@ -1,29 +1,96 @@
-/*フォーム全体を中央へ*/
-#form1 {
+body {
   display: flex;
-  justify-content: center; /*中央へ固定*/
-  height: 50px; /*高さ*/
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
 }
-/*入力フォーム*/
-#sbox1 {
-  width: 250px; /*横幅*/
-  padding: 0 15px; /*プレースホルダーの位置調整*/
-  border-radius: 4px 0 0 4px; /*左側の角を少し丸める*/
-  background: #eee; /*検背景カラー*/
-  border: none; /*枠線を消す*/
-  outline: 0; /*クリック時の青い枠線消す*/
+
+.header {
+  margin-top: 10px;
 }
-/*検索ボタン*/
-#sbtn1 {
-  width: 70px; /*横幅*/
-  border-radius: 0 4px 4px 0; /*右側の角を少し丸める*/
-  background: #7fbfff; /*背景カラー*/
-  border: none; /*枠線を消す*/
-  color: #fff; /*テキストカラー*/
-  font-size: 16px; /*フォントサイズ指定*/
-  cursor: pointer; /*マウスを乗せると指差しポインターになる*/
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  width: 100%;
+  max-width: 1400px;
 }
-/*検索ボタンマウスオーバー時*/
-#sbtn1:hover {
-  background: #92dbff; /*背景カラー変更*/
+
+.icon {
+  color: #000;
+  font-size: 35px;
+}
+
+.search-box {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f4edf8;
+  border-radius: 30px;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 30px;
+  width: 30%;
+  max-width: 350px;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 16px;
+  flex-grow: 1;
+  margin-right: 10px;
+  color: #555;
+}
+
+.search-box input::placeholder {
+  color: #aaa;
+}
+
+.search-box button {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #555;
+}
+
+.search-box button:hover {
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .search-box {
+    height: 25px;
+    width: 200px;
+    padding: 8px 15px;
+    border-radius: 20px;
+  }
+
+  .search-box input {
+    font-size: 14px;
+  }
+
+  .search-box button {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-box {
+    height: 25px;
+    width: 200px;
+    padding: 6px 10px;
+  }
+
+  .search-box input {
+    font-size: 12px;
+    margin-right: 5px;
+  }
+
+  .search-box button {
+    font-size: 14px;
+  }
 }
