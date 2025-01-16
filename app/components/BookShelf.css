@@ -1,0 +1,4 @@
+.BookShelf {
+  display: flex;
+  flex-direction: column;
+}

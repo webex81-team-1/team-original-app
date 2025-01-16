@@ -1,12 +1,15 @@
-body {
+.body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100%;
+  align-items: center;
+  width: 95%;
 }
 
 .header {
   margin-top: 10px;
+  width: 100%;
+  max-width: 1400px;
 }
 
 .container {
@@ -15,6 +18,7 @@ body {
   margin: 0;
   width: 100%;
   max-width: 1400px;
+  padding: 0 20px;
 }
 
 .icon {
