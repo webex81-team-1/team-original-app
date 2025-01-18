@@ -2,7 +2,7 @@ import "./BookShelf.css";
 
 const BookShelfHeader = () => {
   return (
-    <div className="bookShelfHeader">
+    <div className="BookShelfHeader">
       <h2>本棚</h2>
     </div>
   );
@@ -27,6 +27,36 @@ const BookShelfBody = () => {
   return (
     <>
       <div className="BookShelfBody">
+        <BookShelfItem
+          image="https://placehold.jp/150x200.png"
+          title="本のタイトル"
+          author="著者名"
+        ></BookShelfItem>
+        <BookShelfItem
+          image="https://placehold.jp/150x200.png"
+          title="本のタイトル"
+          author="著者名"
+        ></BookShelfItem>
+        <BookShelfItem
+          image="https://placehold.jp/150x200.png"
+          title="本のタイトル"
+          author="著者名"
+        ></BookShelfItem>
+        <BookShelfItem
+          image="https://placehold.jp/150x200.png"
+          title="本のタイトル"
+          author="著者名"
+        ></BookShelfItem>
+        <BookShelfItem
+          image="https://placehold.jp/150x200.png"
+          title="本のタイトル"
+          author="著者名"
+        ></BookShelfItem>
+        <BookShelfItem
+          image="https://placehold.jp/150x200.png"
+          title="本のタイトル"
+          author="著者名"
+        ></BookShelfItem>
         <BookShelfItem
           image="https://placehold.jp/150x200.png"
           title="本のタイトル"

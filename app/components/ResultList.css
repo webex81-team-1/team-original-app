@@ -1,11 +1,17 @@
+.Result {
+  width: 100%;
+  max-width: 1000px;
+}
+
 .ResultList {
   width: 100%;
 }
 
 .ResultListBody {
+  width: 100%;
   display: flex;
   justify-content: left;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
   margin-top: 20px;
 }
@@ -14,8 +20,51 @@
   margin: 0 10px 20px 10px;
   border: 1px solid #ccc;
   padding: 10px;
+
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  width: 90%;
 }
 
-.ResultListItemBook h3 {
-  margin-top: 5px;
+.ResultListItemRight {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  margin-left: 30px;
+  width: calc(100% - 200px);
+}
+
+.ResultListItemText {
+  height: calc(100% - 60px);
+  margin-bottom: 10px;
+}
+
+.ResultListItemText h3 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.ResultListItemText p {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.ResultListItemRight button {
+  display: block;
+  width: 100px;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #fff;
+  background: #b7a0e0;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.ResultListItemRight button:hover {
+  background: #a98bdf;
+  transform: scale(1.1);
 }
