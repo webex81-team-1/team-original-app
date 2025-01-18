@@ -1,3 +1,4 @@
+import { useNavigate } from "@remix-run/react";
 import { useState } from "react";
 import { FaBookOpen, FaSearch } from "react-icons/fa";
 import "./Header.css";
@@ -8,6 +9,13 @@ const Icon = () => {
 
 const Search = () => {
   const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    if (query.trim()) {
+      navigate("/results?query=${encodeURIComponent(query)}");
+    }
+  };
 
   return (
     <>
@@ -17,8 +25,9 @@ const Search = () => {
           placeholder="本を検索"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
         />
-        <button>
+        <button onClick={handleSearch}>
           <span>
             <FaSearch />
           </span>

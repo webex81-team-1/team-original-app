@@ -1,13 +1,8 @@
-.BookShelf {
-  display: flex;
-  flex-direction: column;
-}
-
-.BookShelf {
+.ResultList {
   width: 100%;
 }
 
-.BookShelfBody {
+.ResultListBody {
   display: flex;
   justify-content: left;
   flex-wrap: wrap;
@@ -15,12 +10,12 @@
   margin-top: 20px;
 }
 
-.BookShelfItem {
+.ResultListItem {
   margin: 0 10px 20px 10px;
   border: 1px solid #ccc;
   padding: 10px;
 }
 
-.BookShelfItemBook h3 {
+.ResultListItemBook h3 {
   margin-top: 5px;
 }
