@@ -1,5 +1,7 @@
 import { useLocation } from "@remix-run/react";
+import { addDoc, collection } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { db } from "../firebase";
 import "./ResultList.css";
 
 const ResultListHeader = () => {
@@ -35,6 +37,30 @@ const ResultListBody = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const addBook = (book) => {
+    addDoc(collection(db, "books"), {
+      title: book.volumeInfo.title || "",
+      subTitle: book.volumeInfo.subTitle || "",
+      authors: book.volumeInfo.authors || [],
+      imageLinks: book.volumeInfo.imageLinks.thumbnail || "",
+      description: book.volumeInfo.description || "",
+      impression: "",
+      ISBM: {
+        ISBM_10: book.volumeInfo.industryIdentifiers["ISBN_10"] || "",
+        ISBM_13: book.volumeInfo.industryIdentifiers["ISBN_13"] || "",
+      },
+      pageCount: book.volumeInfo.pageCount || 0,
+      categories: book.volumeInfo.categories || [],
+      publisher: book.volumeInfo.publisher || "",
+      publishedDate: book.volumeInfo.publishedDate || "",
+      created: new Date(),
+      bookId: book.id || "",
+      averageRating: book.volumeInfo.averageRating || 0,
+      ratingsCount: book.volumeInfo.ratingsCount || 0,
+      previewLink: book.volumeInfo.previewLink || "",
+    });
+  };
+
   useEffect(() => {
     if (query) {
       setLoading(true);
@@ -64,6 +90,7 @@ const ResultListBody = () => {
             description={
               book.volumeInfo.description || "No description available"
             }
+            onSave={() => addBook(book)}
           />
         ))
       ) : (
@@ -86,7 +113,7 @@ const ResultListItem = (props) => {
             <p>{props.author}</p>
             <p>{props.description}</p>
           </div>
-          <button>登録</button>
+          <button onClick={props.onSave}>登録</button>
         </div>
       </div>
     </>

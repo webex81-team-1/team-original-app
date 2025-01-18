@@ -36,7 +36,9 @@ const App = () => {
           title: book.volumeInfo.title || "",
           subTitle: book.volumeInfo.subTitle || "",
           authors: book.volumeInfo.authors || [],
-          imageLinks: book.volumeInfo.imageLinks.thumbnail || "",
+          imageLinks:
+            book.volumeInfo.imageLinks.thumbnail ||
+            "https://placehold.jp/150x200.png",
           description: book.volumeInfo.description || "",
           impression: "",
           ISBM: {

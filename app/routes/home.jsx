@@ -1,5 +1,5 @@
 import BookShelf from "../components/BookShelf";
-import Footer from "../components/Footer";
+import Footer from "../components/Footer.jsx";
 import Header from "../components/Header";
 import Nav from "../components/Nav";
 
