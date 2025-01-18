@@ -1,0 +1,21 @@
+.ResultList {
+  width: 100%;
+}
+
+.ResultListBody {
+  display: flex;
+  justify-content: left;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.ResultListItem {
+  margin: 0 10px 20px 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.ResultListItemBook h3 {
+  margin-top: 5px;
+}

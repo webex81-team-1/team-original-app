@@ -1,0 +1,26 @@
+.BookShelf {
+  display: flex;
+  flex-direction: column;
+}
+
+.BookShelf {
+  width: 100%;
+}
+
+.BookShelfBody {
+  display: flex;
+  justify-content: left;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.BookShelfItem {
+  margin: 0 10px 20px 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.BookShelfItemBook h3 {
+  margin-top: 5px;
+}
