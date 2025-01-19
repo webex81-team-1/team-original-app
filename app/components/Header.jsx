@@ -4,7 +4,10 @@ import { FaBookOpen, FaSearch } from "react-icons/fa";
 import "./Header.css";
 
 const Icon = () => {
-  return <FaBookOpen className="icon" />;
+  const navigate = useNavigate();
+  return (
+    <FaBookOpen className="headerIcon" onClick={() => navigate("/home")} />
+  );
 };
 
 const Search = () => {
@@ -13,7 +16,7 @@ const Search = () => {
 
   const handleSearch = () => {
     if (query.trim()) {
-      navigate("/results?query=${encodeURIComponent(query)}");
+      navigate(`/results?query=${encodeURIComponent(query)}`);
     }
   };
 
