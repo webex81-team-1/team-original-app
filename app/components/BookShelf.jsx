@@ -1,5 +1,6 @@
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { db } from "../firebase";
 import "./BookShelf.css";
 
@@ -12,16 +13,24 @@ const BookShelfHeader = () => {
 };
 
 const BookShelfItem = (props) => {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="BookShelfItem">
         <div className="BookShelfItemBook">
-          <img
-            src={props.image || "https://placehold.jp/150x200.png"}
-            alt={props.title}
-          />
-          <h3>{props.title}</h3>
-          <p>{props.author || "不明な著者"}</p>
+          <button
+            className="BookShelfItemButton"
+            onClick={() =>
+              navigate(`/detail?query=${encodeURIComponent(props.bookId)}`, {
+                state: { book: props.book },
+              })
+            }
+          >
+            <img src={props.image} alt={props.title} />
+            <h3>{props.title}</h3>
+            <p>{props.author}</p>
+          </button>
         </div>
       </div>
     </>
@@ -37,9 +46,25 @@ const BookShelfBody = () => {
       const querySnapShot = await getDocs(collection(db, "books"));
       const booksData = querySnapShot.docs.map((book) => ({
         title: book.data().title,
+        subTitle: book.data().subTitle,
         author: book.data().authors?.join(", ") || "不明な著者",
-        image: book.data().imageLinks || "https://placehold.jp/150x200.png",
-        bookId: book.id, // Firebase ドキュメントの ID
+        imageLinks:
+          book.data().imageLinks || "https://placehold.jp/150x200.png",
+        description: book.data().description,
+        impression: book.data().impression,
+        ISBN: {
+          ISBN_10: book.data().ISBN_10,
+          ISBN_13: book.data().ISBN_13,
+        },
+        pageCount: book.data().pageCount,
+        categories: book.data().categories,
+        publisher: book.data().publisher,
+        publishedDate: book.data().publishedDate,
+        created: book.data().created,
+        bookId: book.data().id,
+        averageRating: book.data().averageRating,
+        ratingsCount: book.data().ratingsCount,
+        previewLink: book.data().previewLink,
       }));
       setBooks(booksData);
     } catch (error) {
@@ -66,7 +91,8 @@ const BookShelfBody = () => {
               key={book.bookId}
               title={book.title}
               author={book.author}
-              image={book.image}
+              image={book.imageLinks}
+              book={book}
             />
           ))
         ) : (
@@ -80,7 +106,7 @@ const BookShelfBody = () => {
 const bookList = () => {
   return (
     <div className="container">
-      <div className="bookShelf">
+      <div className="BookShelf">
         <BookShelfHeader></BookShelfHeader>
         <BookShelfBody></BookShelfBody>
       </div>
