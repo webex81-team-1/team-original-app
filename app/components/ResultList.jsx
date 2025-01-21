@@ -1,6 +1,7 @@
 import { useLocation } from "@remix-run/react";
-import { addDoc, collection } from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { db } from "../firebase";
 import "./ResultList.css";
 
@@ -36,18 +37,31 @@ const ResultListBody = () => {
 
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-  const addBook = (book) => {
-    addDoc(collection(db, "books"), {
+  const goHome = () => {
+    navigate("/home");
+  };
+
+  const addBook = async (book) => {
+    const docRef = doc(collection(db, "books")); // 手動でドキュメントIDを生成
+    await setDoc(docRef, {
+      id: docRef.id, // ドキュメントIDを含める
       title: book.volumeInfo.title || "",
       subTitle: book.volumeInfo.subTitle || "",
       authors: book.volumeInfo.authors || [],
-      imageLinks: book.volumeInfo.imageLinks.thumbnail || "",
+      imageLinks: book.volumeInfo.imageLinks?.thumbnail || "",
       description: book.volumeInfo.description || "",
       impression: "",
-      ISBM: {
-        ISBM_10: book.volumeInfo.industryIdentifiers["ISBN_10"] || "",
-        ISBM_13: book.volumeInfo.industryIdentifiers["ISBN_13"] || "",
+      ISBN: {
+        ISBN_10:
+          book.volumeInfo.industryIdentifiers?.find(
+            (id) => id.type === "ISBN_10"
+          )?.identifier || "",
+        ISBN_13:
+          book.volumeInfo.industryIdentifiers?.find(
+            (id) => id.type === "ISBN_13"
+          )?.identifier || "",
       },
       pageCount: book.volumeInfo.pageCount || 0,
       categories: book.volumeInfo.categories || [],
@@ -59,6 +73,8 @@ const ResultListBody = () => {
       ratingsCount: book.volumeInfo.ratingsCount || 0,
       previewLink: book.volumeInfo.previewLink || "",
     });
+
+    goHome();
   };
 
   useEffect(() => {

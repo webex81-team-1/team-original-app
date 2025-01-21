@@ -1,0 +1,80 @@
+.BookDetail {
+  display: flex;
+  flex-direction: column;
+}
+
+.BookDetailHeader {
+  width: 100%;
+  margin: 10px;
+}
+
+.BookDetailBody {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 10px;
+}
+
+.BookDetailTop {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  width: 100%;
+}
+
+.BookDetailTop img {
+  margin: 0 10px;
+}
+
+.BookDetailInfo {
+  margin-left: 20px;
+}
+
+.BookDetailInfo h3 {
+  margin: 0;
+}
+
+.BookDetailBottom {
+  margin-bottom: 16px;
+}
+
+.deleteButton button {
+  display: block;
+  width: 150px;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #fff;
+  background: rgb(226, 57, 57);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+
+.deleteButton button:hover {
+  background: rgb(226, 57, 57);
+  transform: scale(1.05);
+}
+
+.deleteButton button:active {
+  background: rgb(226, 79, 79);
+  transform: translateY(2px);
+}
+
+@media (max-width: 480px) {
+  .BookDetailTop {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .BookDetailInfo {
+    margin-top: 10px;
+    margin-left: 0px;
+  }
+}

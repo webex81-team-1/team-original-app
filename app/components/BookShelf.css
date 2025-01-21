@@ -1,6 +1,8 @@
 .BookShelf {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .BookShelfHeader {
@@ -20,9 +22,39 @@
 .BookShelfItem {
   margin: 0 10px 20px 10px;
   border: 1px solid #ccc;
-  padding: 10px;
+  width: 200px;
+  height: 300px;
+}
+
+.BookShelfItemBook {
+  width: 100%;
+  height: 100%;
 }
 
 .BookShelfItemBook h3 {
-  margin-top: 5px;
+  margin: 8px 0px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+
+.BookShelfItemBook p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+
+.BookShelfItemButton {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

@@ -59,6 +59,7 @@
   color: #fff;
   background: #b7a0e0;
   border: none;
+  border-bottom: solid 4px #627295;
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
@@ -66,5 +67,10 @@
 
 .ResultListItemRight button:hover {
   background: #a98bdf;
-  transform: scale(1.1);
+  transform: scale(1.05);
+}
+
+.ResultListItemRight button:active {
+  transform: translateY(4px);
+  border-bottom: none;
 }
