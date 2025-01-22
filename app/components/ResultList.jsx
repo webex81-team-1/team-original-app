@@ -23,10 +23,10 @@ const ResultListHeader = () => {
 };
 
 const fetchBooks = async (query) => {
-  const API_KEY = "AIzaSyDoRVJVMNAAm7PGetgwA2HPNdWwp2C0D88";
+  const API_KEY = "AIzaSyChsu3WT1aG9lRtWA1nXWEMD8FnJmYhQeE";
   const URL = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(
     query
-  )}key=${API_KEY}`;
+  )}&key=${API_KEY}`;
 
   try {
     const response = await fetch(URL);
@@ -34,7 +34,7 @@ const fetchBooks = async (query) => {
     return data.items || [];
   } catch (error) {
     console.error("Error fetching books:", error);
-    return []; // エラー時は空の配列を返却
+    return [];
   }
 };
 
@@ -95,9 +95,12 @@ const ResultListBody = () => {
   };
 
   useEffect(() => {
-    if (query) {
+    if (searchQuery) {
+      // 修正：searchQueryに基づいて動作
       setLoading(true);
-      fetchBooks(query).then((data) => {
+      fetchBooks(searchQuery).then((data) => {
+        // 修正：searchQueryを使用
+        console.log(data);
         setBooks(data);
         setLoading(false);
       });

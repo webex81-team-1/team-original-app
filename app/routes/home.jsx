@@ -9,6 +9,7 @@ const App = () => {
       <div className="body">
         <Header></Header>
         <Nav></Nav>
+        {/* <Map></Map> */}
         <BookShelf></BookShelf>
         <Footer></Footer>
       </div>

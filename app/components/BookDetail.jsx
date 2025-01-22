@@ -37,10 +37,10 @@ const BookDetailBody = () => {
           <h3>概要</h3>
           <p>{book.description}</p>
         </div>
-        <div className="BookDetailBottomImpression">
+        {/* <div className="BookDetailBottomImpression">
           <h3>感想</h3>
           <p>{book.impression}</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );
