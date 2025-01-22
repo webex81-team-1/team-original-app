@@ -22,7 +22,7 @@ const BookShelfItem = (props) => {
           <button
             className="BookShelfItemButton"
             onClick={() =>
-              navigate(`/detail?query=${encodeURIComponent(props.bookId)}`, {
+              navigate(`/detail?query=${encodeURIComponent(props.id)}`, {
                 state: { book: props.book },
               })
             }
@@ -61,7 +61,8 @@ const BookShelfBody = () => {
         publisher: book.data().publisher,
         publishedDate: book.data().publishedDate,
         created: book.data().created,
-        bookId: book.data().id,
+        bookId: book.data().bookId,
+        id: book.data().id,
         averageRating: book.data().averageRating,
         ratingsCount: book.data().ratingsCount,
         previewLink: book.data().previewLink,
@@ -79,7 +80,7 @@ const BookShelfBody = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="Loading">Loading...</div>;
   }
 
   return (
@@ -88,7 +89,7 @@ const BookShelfBody = () => {
         {books.length > 0 ? (
           books.map((book) => (
             <BookShelfItem
-              key={book.bookId}
+              key={book.id}
               title={book.title}
               author={book.author}
               image={book.imageLinks}

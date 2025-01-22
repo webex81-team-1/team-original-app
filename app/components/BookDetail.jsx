@@ -56,7 +56,7 @@ const DeleteButton = () => {
     if (!confirmed) return;
     console.log(book);
 
-    deleteDoc(doc(db, "books", book.bookId));
+    deleteDoc(doc(db, "books", book.id));
     navigate("/home");
   };
 

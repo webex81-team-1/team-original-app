@@ -1,5 +1,12 @@
 import { useLocation } from "@remix-run/react";
-import { collection, doc, setDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase";
@@ -16,9 +23,10 @@ const ResultListHeader = () => {
 };
 
 const fetchBooks = async (query) => {
+  const API_KEY = "AIzaSyDoRVJVMNAAm7PGetgwA2HPNdWwp2C0D88";
   const URL = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(
     query
-  )}`;
+  )}key=${API_KEY}`;
 
   try {
     const response = await fetch(URL);
@@ -33,7 +41,7 @@ const fetchBooks = async (query) => {
 const ResultListBody = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const query = queryParams.get("query");
+  const searchQuery = queryParams.get("query");
 
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -44,9 +52,18 @@ const ResultListBody = () => {
   };
 
   const addBook = async (book) => {
-    const docRef = doc(collection(db, "books")); // 手動でドキュメントIDを生成
-    await setDoc(docRef, {
-      id: docRef.id, // ドキュメントIDを含める
+    const booksRef = collection(db, "books");
+    const existingBookQuery = query(booksRef, where("bookId", "==", book.id));
+    const existingBooks = await getDocs(existingBookQuery);
+
+    if (!existingBooks.empty) {
+      console.log("この本は既に登録されています。");
+      return;
+    }
+
+    const docCorrection = doc(collection(db, "books"));
+    await setDoc(docCorrection, {
+      id: docCorrection.id, // ドキュメントIDを含める
       title: book.volumeInfo.title || "",
       subTitle: book.volumeInfo.subTitle || "",
       authors: book.volumeInfo.authors || [],
@@ -85,10 +102,10 @@ const ResultListBody = () => {
         setLoading(false);
       });
     }
-  }, [query]);
+  }, [searchQuery]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="Loading">Loading...</div>;
   }
 
   return (
@@ -110,7 +127,7 @@ const ResultListBody = () => {
           />
         ))
       ) : (
-        <div>No results found.</div>
+        <div className="Loading">No results found.</div>
       )}
     </div>
   );
