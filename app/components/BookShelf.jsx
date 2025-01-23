@@ -23,7 +23,7 @@ const BookShelfItem = (props) => {
             className="BookShelfItemButton"
             onClick={() =>
               navigate(`/detail?query=${encodeURIComponent(props.id)}`, {
-                state: { book: props.book },
+                state: { book: props.book, seiti: props.seiti },
               })
             }
           >
@@ -66,6 +66,7 @@ const BookShelfBody = () => {
         averageRating: book.data().averageRating,
         ratingsCount: book.data().ratingsCount,
         previewLink: book.data().previewLink,
+        seiti: book.data().seiti,
       }));
       setBooks(booksData);
     } catch (error) {

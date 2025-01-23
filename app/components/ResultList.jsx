@@ -1,3 +1,4 @@
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { useLocation } from "@remix-run/react";
 import {
   collection,
@@ -61,6 +62,31 @@ const ResultListBody = () => {
       return;
     }
 
+    // const { GoogleGenerativeAI } = require("@google/generative-ai");
+    const genAI = new GoogleGenerativeAI(
+      "AIzaSyChsu3WT1aG9lRtWA1nXWEMD8FnJmYhQeE"
+    );
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
+
+    const prompt = `
+    「${book.volumeInfo.title}」という作品の聖地を以下のようなJSON形式のリストのみで出力してください。
+    [
+      { "position": { "lat": LATITUDE, "lng": LONGITUDE }, "title": "${book.volumeInfo.title}" },
+      ...
+    ]
+    もし、技術書など聖地がない場合は、
+    []
+    と空のリストを返してください。
+  `;
+    const result = await model.generateContent(prompt);
+    const Seiti = JSON.parse(
+      result.response
+        .text()
+        .replace(/```json/g, "")
+        .replace(/```/g, "")
+        .trim()
+    );
+
     const docCorrection = doc(collection(db, "books"));
     await setDoc(docCorrection, {
       id: docCorrection.id, // ドキュメントIDを含める
@@ -89,6 +115,7 @@ const ResultListBody = () => {
       averageRating: book.volumeInfo.averageRating || 0,
       ratingsCount: book.volumeInfo.ratingsCount || 0,
       previewLink: book.volumeInfo.previewLink || "",
+      seiti: Seiti,
     });
 
     goHome();
@@ -96,11 +123,8 @@ const ResultListBody = () => {
 
   useEffect(() => {
     if (searchQuery) {
-      // 修正：searchQueryに基づいて動作
       setLoading(true);
       fetchBooks(searchQuery).then((data) => {
-        // 修正：searchQueryを使用
-        console.log(data);
         setBooks(data);
         setLoading(false);
       });

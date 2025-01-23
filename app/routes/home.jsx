@@ -9,7 +9,7 @@ const App = () => {
       <div className="body">
         <Header></Header>
         <Nav></Nav>
-        {/* <Map></Map> */}
+        {/* <BookMap seiti={[]}></BookMap> */}
         <BookShelf></BookShelf>
         <Footer></Footer>
       </div>

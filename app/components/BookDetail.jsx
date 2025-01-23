@@ -2,6 +2,7 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { useLocation, useNavigate } from "react-router-dom";
 import { db } from "../firebase";
 import "./BookDetail.css";
+import BookMap from "./BookMap.jsx";
 
 const BookHeader = () => {
   return (
@@ -13,9 +14,8 @@ const BookHeader = () => {
   );
 };
 
-const BookDetailBody = () => {
-  const location = useLocation();
-  const book = location.state.book;
+const BookDetailBody = (props) => {
+  const book = props.book;
 
   return (
     <div className="BookDetailBody">
@@ -68,11 +68,15 @@ const DeleteButton = () => {
 };
 
 const BookDetail = () => {
+  const location = useLocation();
+  const book = location.state.book;
+
   return (
     <div className="container">
       <div className="BookDetail">
+        <BookMap seiti={book.seiti}></BookMap>
         <BookHeader></BookHeader>
-        <BookDetailBody></BookDetailBody>
+        <BookDetailBody book={book}></BookDetailBody>
         <DeleteButton></DeleteButton>
       </div>
     </div>
