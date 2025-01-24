@@ -1,3 +1,4 @@
+import { getAuth } from "firebase/auth";
 import { deleteDoc, doc } from "firebase/firestore";
 import { useLocation, useNavigate } from "react-router-dom";
 import { db } from "../firebase";
@@ -51,12 +52,20 @@ const DeleteButton = () => {
   const book = location.state.book;
   const navigate = useNavigate();
 
-  const DeleteBook = () => {
+  const DeleteBook = async () => {
     const confirmed = window.confirm("本当に削除しますか？");
     if (!confirmed) return;
 
-    deleteDoc(doc(db, "books", book.id));
-    navigate("/");
+    try {
+      const auth = getAuth();
+      const userId = auth.currentUser.uid; // 認証中のユーザーID
+      await deleteDoc(doc(db, `users/${userId}/books`, book.id));
+      alert("本を削除しました");
+      navigate("/home");
+    } catch (error) {
+      console.error("本の削除に失敗しました: ", error);
+      alert("本の削除中にエラーが発生しました");
+    }
   };
 
   return (
