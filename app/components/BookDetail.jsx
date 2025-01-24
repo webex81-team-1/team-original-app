@@ -54,10 +54,9 @@ const DeleteButton = () => {
   const DeleteBook = () => {
     const confirmed = window.confirm("本当に削除しますか？");
     if (!confirmed) return;
-    console.log(book);
 
     deleteDoc(doc(db, "books", book.id));
-    navigate("/home");
+    navigate("/");
   };
 
   return (
@@ -70,6 +69,7 @@ const DeleteButton = () => {
 const BookDetail = () => {
   const location = useLocation();
   const book = location.state.book;
+  console.log(book.seiti);
 
   return (
     <div className="container">

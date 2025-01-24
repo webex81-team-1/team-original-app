@@ -13,20 +13,63 @@ body {
   max-width: 1400px;
 }
 
-/* ナビゲーションバー */
 .navbar {
   width: 100%;
   background-color: #fff;
   border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
 }
 
 .nav-list {
   list-style: none;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: left;
   padding: 10px 0;
   margin: 0;
+}
+
+.userBar {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.userBar button {
+  margin-left: 10px;
+  padding: 10px 15px;
+  font-size: 17px;
+  font-weight: bold;
+  color: #fff;
+  background: #ee5757;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.userBar button:hover {
+  background: #f32323;
+  transform: scale(1.05);
+}
+
+.userBar button:active {
+  background: #f32323;
+  transform: translateY(2px);
+}
+
+.userBar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.userBar p {
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  margin-right: 10px;
+  font-weight: bold;
 }
 
 /* 各タブ */
@@ -41,22 +84,26 @@ body {
   color: #008000;
 }
 
-.nav-item a {
+.nav-item button {
   text-decoration: none;
   color: #333;
   font-size: 17px;
   position: relative;
   padding: 5px 0;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
 }
 
 /* アクティブタブのスタイル */
-.nav-item.active a {
+.nav-item.active button {
   font-weight: bold;
   color: #008000;
 }
 
 /* アクティブタブの下線 */
-.nav-item.active a::after {
+.nav-item.active button::after {
   content: "";
   position: absolute;
   background-color: #008000;
@@ -65,7 +112,7 @@ body {
 }
 
 /* ホバー時のスタイル */
-.nav-item a:hover {
+.nav-item button:hover {
   color: #006400;
 }
 
@@ -74,8 +121,16 @@ body {
     margin: 0 10px;
   }
 
-  .nav-item a {
+  .nav-item button {
     font-size: 12px;
+  }
+
+  .userBar img {
+    display: none;
+  }
+
+  .userBar p {
+    display: none;
   }
 }
 
@@ -90,7 +145,7 @@ body {
     margin: 5px;
   }
 
-  .nav-item a {
+  .nav-item button {
     font-size: 10px;
   }
 }

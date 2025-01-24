@@ -1,4 +1,4 @@
-import App from "./home.jsx";
+import Login from "./login";
 
 export const meta = () => {
   return [
@@ -10,7 +10,7 @@ export const meta = () => {
 export default function Index() {
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <App></App>
+      <Login></Login>
     </div>
   );
 }
