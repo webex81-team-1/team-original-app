@@ -2,6 +2,7 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { useLocation, useNavigate } from "react-router-dom";
 import { db } from "../firebase";
 import "./BookDetail.css";
+import BookMap from "./BookMap.jsx";
 
 const BookHeader = () => {
   return (
@@ -13,9 +14,8 @@ const BookHeader = () => {
   );
 };
 
-const BookDetailBody = () => {
-  const location = useLocation();
-  const book = location.state.book;
+const BookDetailBody = (props) => {
+  const book = props.book;
 
   return (
     <div className="BookDetailBody">
@@ -37,10 +37,10 @@ const BookDetailBody = () => {
           <h3>概要</h3>
           <p>{book.description}</p>
         </div>
-        <div className="BookDetailBottomImpression">
+        {/* <div className="BookDetailBottomImpression">
           <h3>感想</h3>
           <p>{book.impression}</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );
@@ -54,10 +54,9 @@ const DeleteButton = () => {
   const DeleteBook = () => {
     const confirmed = window.confirm("本当に削除しますか？");
     if (!confirmed) return;
-    console.log(book);
 
-    deleteDoc(doc(db, "books", book.bookId));
-    navigate("/home");
+    deleteDoc(doc(db, "books", book.id));
+    navigate("/");
   };
 
   return (
@@ -68,11 +67,16 @@ const DeleteButton = () => {
 };
 
 const BookDetail = () => {
+  const location = useLocation();
+  const book = location.state.book;
+  console.log(book.seiti);
+
   return (
     <div className="container">
       <div className="BookDetail">
+        <BookMap seiti={book.seiti}></BookMap>
         <BookHeader></BookHeader>
-        <BookDetailBody></BookDetailBody>
+        <BookDetailBody book={book}></BookDetailBody>
         <DeleteButton></DeleteButton>
       </div>
     </div>

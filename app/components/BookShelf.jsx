@@ -1,7 +1,8 @@
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
 import "./BookShelf.css";
 
 const BookShelfHeader = () => {
@@ -16,35 +17,42 @@ const BookShelfItem = (props) => {
   const navigate = useNavigate();
 
   return (
-    <>
-      <div className="BookShelfItem">
-        <div className="BookShelfItemBook">
-          <button
-            className="BookShelfItemButton"
-            onClick={() =>
-              navigate(`/detail?query=${encodeURIComponent(props.bookId)}`, {
-                state: { book: props.book },
-              })
-            }
-          >
-            <img src={props.image} alt={props.title} />
-            <h3>{props.title}</h3>
-            <p>{props.author}</p>
-          </button>
-        </div>
+    <div className="BookShelfItem">
+      <div className="BookShelfItemBook">
+        <button
+          className="BookShelfItemButton"
+          onClick={() =>
+            navigate(`/detail?query=${encodeURIComponent(props.id)}`, {
+              state: { book: props.book, seiti: props.seiti },
+            })
+          }
+        >
+          <img src={props.image} alt={props.title} />
+          <h3>{props.title}</h3>
+          <p>{props.author}</p>
+        </button>
       </div>
-    </>
+    </div>
   );
 };
 
 const BookShelfBody = () => {
+  const [user] = useAuthState(auth); // ログイン中のユーザー情報を取得
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const getBooks = async () => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
     try {
-      const querySnapShot = await getDocs(collection(db, "books"));
-      const booksData = querySnapShot.docs.map((book) => ({
+      const userBooksRef = collection(db, `users/${user.uid}/books`); // ユーザー固有の本のコレクション
+      const querySnapshot = await getDocs(userBooksRef);
+
+      const booksData = querySnapshot.docs.map((book) => ({
         title: book.data().title,
         subTitle: book.data().subTitle,
         author: book.data().authors?.join(", ") || "不明な著者",
@@ -53,19 +61,22 @@ const BookShelfBody = () => {
         description: book.data().description,
         impression: book.data().impression,
         ISBN: {
-          ISBN_10: book.data().ISBN_10,
-          ISBN_13: book.data().ISBN_13,
+          ISBN_10: book.data().ISBN.ISBN_10,
+          ISBN_13: book.data().ISBN.ISBN_13,
         },
         pageCount: book.data().pageCount,
         categories: book.data().categories,
         publisher: book.data().publisher,
         publishedDate: book.data().publishedDate,
         created: book.data().created,
-        bookId: book.data().id,
+        bookId: book.data().bookId,
+        id: book.id,
         averageRating: book.data().averageRating,
         ratingsCount: book.data().ratingsCount,
         previewLink: book.data().previewLink,
+        seiti: book.data().seiti,
       }));
+
       setBooks(booksData);
     } catch (error) {
       console.error("Error fetching books:", error);
@@ -76,42 +87,44 @@ const BookShelfBody = () => {
 
   useEffect(() => {
     getBooks();
-  }, []);
+  }, [user]);
+
+  if (!user) {
+    return <div>ログインしてください。</div>;
+  }
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="Loading">Loading...</div>;
   }
 
   return (
-    <>
-      <div className="BookShelfBody">
-        {books.length > 0 ? (
-          books.map((book) => (
-            <BookShelfItem
-              key={book.bookId}
-              title={book.title}
-              author={book.author}
-              image={book.imageLinks}
-              book={book}
-            />
-          ))
-        ) : (
-          <div>本が見つかりませんでした。</div>
-        )}
-      </div>
-    </>
+    <div className="BookShelfBody">
+      {books.length > 0 ? (
+        books.map((book) => (
+          <BookShelfItem
+            key={book.id}
+            title={book.title}
+            author={book.author}
+            image={book.imageLinks}
+            book={book}
+          />
+        ))
+      ) : (
+        <div>本が見つかりませんでした。</div>
+      )}
+    </div>
   );
 };
 
-const bookList = () => {
+const BookList = () => {
   return (
     <div className="container">
       <div className="BookShelf">
-        <BookShelfHeader></BookShelfHeader>
-        <BookShelfBody></BookShelfBody>
+        <BookShelfHeader />
+        <BookShelfBody />
       </div>
     </div>
   );
 };
 
-export default bookList;
+export default BookList;

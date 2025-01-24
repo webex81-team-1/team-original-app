@@ -1,5 +1,6 @@
 // 必要な関数を import
 import { initializeApp } from "firebase/app";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -14,5 +15,9 @@ const firebaseConfig = {
 
 // Firebaseアプリオブジェクトを初期化
 const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 // Firestoreを読み込み、db(databaseの略)として export
 export const db = getFirestore(app);
+export { auth, provider };

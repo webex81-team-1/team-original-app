@@ -74,3 +74,8 @@
   transform: translateY(4px);
   border-bottom: none;
 }
+
+.Loading {
+  margin: 30px;
+  font-weight: bold;
+}
