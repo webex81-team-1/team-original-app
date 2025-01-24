@@ -1,5 +1,6 @@
 import { useNavigate } from "@remix-run/react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { CiLogout } from "react-icons/ci";
 import { auth } from "../firebase";
 import "./Nav.css";
 
@@ -54,7 +55,10 @@ const Nav = () => {
                 alt="User Profile"
                 className="userProfileImage"
               />
-              <button onClick={handleLogout}>Logout</button>
+              <button onClick={handleLogout}>
+                <CiLogout className="logoutButton" />
+                Logout
+              </button>
             </>
           ) : (
             // ユーザーが未ログインの場合
