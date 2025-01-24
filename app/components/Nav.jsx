@@ -17,7 +17,7 @@ const Nav = () => {
   };
 
   const handleBooksClick = () => {
-    navigate("/books");
+    // navigate("/books");
   };
 
   const handleLogout = async () => {
